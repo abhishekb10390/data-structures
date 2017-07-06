@@ -1,8 +1,26 @@
 var Queue = function() {
-  // Hey! Rewrite in the new style. Your code will wind up looking very similar,
-  // but try not not reference your old code in writing the new style.
-};
+  var someInstance = {};
+  // Use an object with numeric keys to store values
+  var storage = {};
+  var lastCalled = 1;
+  //
+  someInstance.enqueue = function(value) {
+   
+    storage[lastCalled] = value;
+    lastCalled += 1;
+  };
 
-var queueMethods = {};
+  someInstance.dequeue = function() {
+  
+    var firstNum = Object.keys(storage)[0];
+    var firstOut = storage[firstNum];
+    delete storage[firstNum];
+    return firstOut;
+  }; 
 
+  someInstance.size = function() {
+    return Object.keys(storage).length;
+  };
 
+  return someInstance;
+}; 
