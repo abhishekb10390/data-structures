@@ -1,26 +1,34 @@
-var Queue = function() {
-  var someInstance = {};
-  // Use an object with numeric keys to store values
-  var storage = {};
-  var lastCalled = 1;
-  //
-  someInstance.enqueue = function(value) {
-   
-    storage[lastCalled] = value;
-    lastCalled += 1;
+  var Queue = function() {
+    // Hey! Rewrite in the new style. Your code will wind up looking very similar,
+    // but try not not reference your old code in writing the new style.
+    var instanceOf = {storage: {}, lastNum: 0};
+
+    extend(instanceOf, queueMethods);
+    return instanceOf;
+  };  
+//
+  var queueMethods = {};
+
+  queueMethods.enqueue = function(value) {  
+    var last = this.lastNum;
+    this.storage[last] = value;
+    this.lastNum += 1;
   };
 
-  someInstance.dequeue = function() {
+  queueMethods.dequeue = function() {
+    var firstNum = Object.keys(this.storage)[0];
+    var out = this.storage[firstNum];
+    delete this.storage[firstNum];
+    return out;
+  };
+
+  queueMethods.size = function() {
+    return Object.keys(this.storage).length;
+  };
+
+  var extend = function(to, from) {
+    for (var key in from) {
+      to[key] = from[key];
+    }
+  };
   
-    var firstNum = Object.keys(storage)[0];
-    var firstOut = storage[firstNum];
-    delete storage[firstNum];
-    return firstOut;
-  }; 
-
-  someInstance.size = function() {
-    return Object.keys(storage).length;
-  };
-
-  return someInstance;
-}; 

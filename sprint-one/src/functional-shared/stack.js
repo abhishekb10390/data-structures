@@ -1,33 +1,34 @@
 var Stack = function() {
-  var someInstance = {};
+  // Hey! Rewrite in the new style. Your code will wind up looking very similar,
+  // but try not not reference your old code in writing the new style.
+  var instanceOf = {storage: {}, lastNum: 1};
 
-  // Use an object with numeric keys to store values
-  var storage = {};
-  var lastNum = 1;
-  //
-  someInstance.push = function(value) {
-  
-    storage[lastNum] = value;
-    lastNum += 1;
-  };
-
-  someInstance.pop = function() {
-    lastNum -= 1;
-    var popped = storage[lastNum];
-    delete storage[lastNum];
-    return popped;
-  };
-
-  someInstance.size = function() {
-    return Object.keys(storage).length;
-  };
-
-  return someInstance;
+    extend(instanceOf, stackMethods);
+    return instanceOf;
 };
+//
+var stackMethods = {};
+
+  stackMethods.push = function(value) {  
+    var last = this.lastNum;
+    this.storage[last] = value;
+    this.lastNum += 1;
+  };
+
+  stackMethods.pop = function() {
+    this.lastNum -= 1;
+    var out = this.storage[this.lastNum];
+    delete this.storage[this.lastNum];
+    return out;
+  };
+
+  stackMethods.size = function() {
+    return Object.keys(this.storage).length;
+  };
+
+  var extend = function(to, from) {
+    for (var key in from) {
+      to[key] = from[key];
+    }
+  };
  
-
-
-
-
-
-
